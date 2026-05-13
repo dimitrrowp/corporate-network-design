@@ -22,10 +22,10 @@ Each access switch is dual-homed to both multilayer switches through trunk links
 VLAN segmentation is implemented across all floors to logically separate departments and control broadcast domains, improving both performance and security.
 
 ## VLAN and Floor Distribution
-##### Floor 1: VLAN 10, 20, 30
-##### Floor 2: VLAN 40, 50, 60
-##### Floor 3: VLAN 70, 80, 90
-##### Server VLAN: VLAN 100
+#### Floor 1: VLAN 10, 20, 30
+#### Floor 2: VLAN 40, 50, 60
+#### Floor 3: VLAN 70, 80, 90
+#### Server VLAN: VLAN 100
 The network is logically segmented using VLANs, with each department assigned a dedicated subnet. This design improves security, reduces broadcast domains, and enhances overall network performance.
 ### Floor 1 
    Floor 1 includes the following departments:
