@@ -21,6 +21,33 @@ The edge routers are connected to the ISP using static routing, providing contro
 Each access switch is dual-homed to both multilayer switches through trunk links, providing high availability and eliminating single points of failure. This ensures continuous network operation even if one multilayer switch fails.
 VLAN segmentation is implemented across all floors to logically separate departments and control broadcast domains, improving both performance and security.
 
+##VLAN and Floor Distribution
+Floor 1: VLAN 10, 20, 30
+Floor 2: VLAN 40, 50, 60
+Floor 3: VLAN 70, 80, 90
+Server VLAN: VLAN 100
+The network is logically segmented using VLANs, with each department assigned a dedicated subnet. This design improves security, reduces broadcast domains, and enhances overall network performance.
+### Floor 1 
+   Floor 1 includes the following departments:
+-	Reception (VLAN 10 – 192.168.10.0/24)
+-	Human Resources (HR) (VLAN 20 – 192.168.20.0/24)
+-	Finance (VLAN 30 – 192.168.30.0/24)
+### Floor 2
+   Floor 2 includes:
+-	IT Department (VLAN 40 – 192.168.40.0/24)
+-	Network Administration (VLAN 50 – 192.168.50.0/24)
+-	Management (VLAN 60 – 192.168.60.0/24)
+### Floor 3
+   Floor 3 includes:
+-	Sales (VLAN 70 – 192.168.70.0/24)
+-	Logistics (VLAN 80 – 192.168.80.0/24)
+-	Customer Support (CS) (VLAN 90 – 192.168.90.0/24)
+
+In addition, a separate server network is implemented:
+- Server Network (VLAN 100 – 192.168.100.0/28)
+This VLAN is used for centralized services such as servers and is not tied to a specific floor, ensuring controlled and secure access from all departments.
+
+
 ## Network Design
 
 The network is designed using a collapsed core architecture, where multilayer switches handle both Layer 2 and Layer 3 operations.  
@@ -30,6 +57,21 @@ These switches act as default gateways for all VLANs using SVIs. HSRP is used to
 DHCP is configured with a split-scope approach to maintain reliable IP address distribution.  
 
 Access switches are connected to both multilayer switches, which helps avoid single points of failure and improves overall network reliability.
+
+##Technologies Implemented
+### VLAN
+   Each department is assigned to a separate VLAN to isolate traffic, reduce broadcast domains, and improve overall network performance.
+### Inter-VLAN Routing
+   Inter-VLAN communication is achieved using Switch Virtual Interfaces (SVIs) configured on the multilayer switches.
+### OSPF Routing
+   OSPF is configured between the multilayer switches and the edge routers to enable dynamic routing and fast convergence within the internal network.
+### DHCP
+   DHCP services are configured on both multilayer switches using a split-scope design. The address pools are divided to provide redundancy and ensure continuous IP address allocation in case of device failure.
+### SSH Configuration
+   SSH is configured on all multilayer switches, access switches, and routers to allow secure remote management. Access is restricted using access control lists (ACLs), permitting only specific networks (e.g., 192.168.40.0 and 192.168.50.0).
+### Port Security
+   Port security can be implemented on access switch ports to enhance network security by restricting unauthorized devices.
+
 
 ## Testing and Verification
 
