@@ -15,6 +15,7 @@ These settings secure internet access. **PRIMARY-ROUTER** acts as the main exit 
 ### IP Addressing Scheme
 The network follows a structured IP addressing plan to ensure logical segmentation, scalability, and easy management.
 VLAN Networks:
+
 VLAN 10 – 192.168.10.0/24 --> Reception
 VLAN 20 – 192.168.20.0/24 --> HR
 VLAN 30 – 192.168.30.0/24 --> Finance
@@ -27,7 +28,7 @@ VLAN 90 – 192.168.90.0/24 --> CS
 VLAN 100 – 192.168.100.0/28 --> Servers
 VLAN 199 - 192.168.199.0/24 --> Management
 
-##### Transit & Infrastructure Networks (Point-to-Point)
+#### Transit & Infrastructure Networks (Point-to-Point)
 CORE-SW1 ↔ CORE-SW2 (VLAN 999): 10.10.10.0/30 (L2/L3 EtherChannel Link)
 
 CORE-SW1 ↔ PRIMARY ROUTER: 10.10.1.0/30 (Main Edge Link)
