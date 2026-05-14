@@ -26,6 +26,7 @@ VLAN segmentation is implemented across all floors to logically separate departm
 #### Floor 2: VLAN 40, 50, 60
 #### Floor 3: VLAN 70, 80, 90
 #### Server VLAN: VLAN 100
+#### Management VLAN: VLAN 199
 The network is logically segmented using VLANs, with each department assigned a dedicated subnet. This design improves security, reduces broadcast domains, and enhances overall network performance.
 ### Floor 1 
    Floor 1 includes the following departments:
@@ -45,7 +46,11 @@ The network is logically segmented using VLANs, with each department assigned a 
 
 In addition, a separate server network is implemented:
 - Server Network (VLAN 100 – 192.168.100.0/28)
-This VLAN is used for centralized services such as servers and is not tied to a specific floor, ensuring controlled and secure access from all departments.
+
+This VLAN is used for centralized services such as servers and is not assigned to a specific floor, allowing controlled and secure access from all departments.
+
+Additionally, a dedicated management switch is introduced. This switch is used only for network management purposes and is connected directly to the core switches, without being part of the floor access layer. This separation improves security and allows centralized control of network devices.
+- Management Network (VLAN 199 - 192.168.199.0/24)
 
 
 ## Network Design
@@ -68,7 +73,7 @@ Access switches are connected to both multilayer switches, which helps avoid sin
 ### DHCP
    DHCP services are configured on both multilayer switches using a split-scope design. The address pools are divided to provide redundancy and ensure continuous IP address allocation in case of device failure.
 ### SSH Configuration
-   SSH is configured on all multilayer switches, access switches, and routers to allow secure remote management. Access is restricted using access control lists (ACLs), permitting only specific networks (e.g., 192.168.40.0 and 192.168.50.0).
+   SSH is configured on all multilayer switches, access switches, and routers to allow secure remote management. Access is restricted using access control lists (ACLs), permitting only specific management networks (e.g., 192.168.199.0).
 ### Port Security
    Port security can be implemented on access switch ports to enhance network security by restricting unauthorized devices.
 
