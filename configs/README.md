@@ -17,8 +17,11 @@ The network follows a structured IP addressing plan to ensure logical segmentati
 VLAN Networks:
 
 VLAN 10 – 192.168.10.0/24 --> Reception
+
 VLAN 20 – 192.168.20.0/24 --> HR
+
 VLAN 30 – 192.168.30.0/24 --> Finance
+
 VLAN 40 – 192.168.40.0/24 --> IT
 VLAN 50 – 192.168.50.0/24 --> NETAdmin
 VLAN 60 – 192.168.60.0/24 --> ServiceDesk
