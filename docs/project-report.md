@@ -63,7 +63,7 @@ DHCP is configured with a split-scope approach to maintain reliable IP address d
 
 Access switches are connected to both multilayer switches, which helps avoid single points of failure and improves overall network reliability.
 
-##Technologies Implemented
+## Technologies Implemented
 ### VLAN
    Each department is assigned to a separate VLAN to isolate traffic, reduce broadcast domains, and improve overall network performance.
 ### Inter-VLAN Routing
