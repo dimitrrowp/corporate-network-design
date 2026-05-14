@@ -12,7 +12,7 @@ Basic technologies like OSPF, HSRP, DHCP, and NAT are included to simulate a rea
 ## Structure
 - configs/ → device configurations (routers & switches)
 - docs/ → project documentation
-- images/ → network topology
+- simulation/ → project file
 
 ## Technologies Used
 - VLANs (network segmentation)
