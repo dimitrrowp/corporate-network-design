@@ -23,3 +23,7 @@ Basic technologies like OSPF, HSRP, DHCP, and NAT are included to simulate a rea
 
 ## Notes
 This project is created for learning purposes and demonstrates fundamental networking concepts.
+
+## Simulation
+You can download the lab environment and test it yourself:
+* [Download Project - Main.pkt](./simulation/Project%20-%20Main.pkt)
