@@ -1,1 +1,85 @@
+### 1. Interface and EtherChannel Configuration
+##### Core Interconnectivity (EtherChannel)
+CORE-SW1(config)# interface range f0/1-2
+CORE-SW1(config-if)# switchport mode trunk
+CORE-SW1(config-if)# channel-group 1 mode active
 
+CORE-SW1(config)# interface port-channel 1
+CORE-SW1(config-if)# switchport mode trunk
+CORE-SW1(config-if)# switchport trunk allowed vlan 10,20,30,40,50,60,70,80,90,100,199,999
+
+##### Trunks to Access Switches
+CORE-SW1(config)# interface f0/3
+CORE-SW1(config-if)# description Link_to_F1-ACCESS
+CORE-SW1(config-if)# switchport mode trunk
+CORE-SW1(config-if)# switchport trunk allowed vlan 10,20,30,199
+
+CORE-SW1(config)# interface f0/4
+CORE-SW1(config-if)# description Link_to_F3-ACCESS
+CORE-SW1(config-if)# switchport mode trunk
+CORE-SW1(config-if)# switchport trunk allowed vlan 70,80,90,199
+
+CORE-SW1(config)# interface f0/5
+CORE-SW1(config-if)# description Link_to_F2-ACCESS
+CORE-SW1(config-if)# switchport mode trunk
+CORE-SW1(config-if)# switchport trunk allowed vlan 40,50,60,199
+
+CORE-SW1(config)# interface f0/7
+CORE-SW1(config-if)# description Link_to_SERVER-ACCESS
+CORE-SW1(config-if)# switchport mode trunk
+CORE-SW1(config-if)# switchport trunk allowed vlan 100,199
+
+### 2. Dynamic Routing (OSPF)
+CORE-SW1(config)# ip routing
+CORE-SW1(config)# router ospf 1
+CORE-SW1(config-router)# router-id 4.4.4.4
+CORE-SW1(config-router)# network 10.10.10.0 0.0.0.3 area 0
+CORE-SW1(config-router)# network 10.10.1.0 0.0.0.3 area 0
+CORE-SW1(config-router)# network 10.10.2.0 0.0.0.3 area 0
+CORE-SW1(config-router)# network 192.168.0.0 0.0.255.255 area 0
+CORE-SW1(config-router)# network 4.4.4.4 0.0.0.0 area 0
+
+### 3. Management and Security (SSH)
+##### Global SSH Settings
+CORE-SW1(config)# ip domain-name corp.lan
+CORE-SW1(config)# crypto key generate rsa 1024
+CORE-SW1(config)# ip ssh version 2
+
+##### Administrative User
+CORE-SW1(config)# username admin privilege 15 secret Pa$$w0rd
+
+##### Management ACL
+CORE-SW1(config)# access-list 23 permit 192.168.199.0 0.0.0.255
+
+##### Applying Security to Virtual Lines
+CORE-SW1(config)# line vty 0 15
+CORE-SW1(config-line)# access-class 23 in
+CORE-SW1(config-line)# transport input ssh
+CORE-SW1(config-line)# login local
+
+### 4. FHRP Configuration (HSRP)
+##### VLAN 80 HSRP (Active Role)
+CORE-SW1(config)# interface vlan 80
+CORE-SW1(config-if)# ip address 192.168.80.2 255.255.255.0
+CORE-SW1(config-if)# standby 80 ip 192.168.80.1
+CORE-SW1(config-if)# standby 80 priority 110
+CORE-SW1(config-if)# standby 80 preempt
+CORE-SW1(config-if)# standby 80 track g0/1 10
+
+### 5. DHCP Server Configuration
+##### DHCP Exclusions
+CORE-SW2(config)# ip dhcp excluded-address 192.168.10.1 192.168.10.150
+CORE-SW2(config)# ip dhcp excluded-address 192.168.20.1 192.168.20.150
+# ... (and other as the same)
+CORE-SW2(config)# ip dhcp excluded-address 192.168.100.1 192.168.100.10
+
+##### DHCP Pools
+CORE-SW2(config)# ip dhcp pool VLAN10_POOL
+CORE-SW2(dhcp-config)# network 192.168.10.0 255.255.255.0
+CORE-SW2(dhcp-config)# default-router 192.168.10.1
+CORE-SW2(dhcp-config)# dns-server 8.8.8.8
+
+CORE-SW2(config)# ip dhcp pool VLAN20_POOL
+CORE-SW2(dhcp-config)# network 192.168.20.0 255.255.255.0
+CORE-SW2(dhcp-config)# default-router 192.168.20.1
+CORE-SW2(dhcp-config)# dns-server 8.8.8.8
